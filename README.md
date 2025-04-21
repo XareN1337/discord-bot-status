@@ -22,6 +22,8 @@ A Discord bot that monitors the status of another bot. When the monitored bot go
 
 ## Installation
 
+### Standard Installation
+
 1. Clone this repository:
 ```
 git clone https://github.com/XareN1337/discord-bot-status.git
@@ -46,6 +48,49 @@ MONITORED_BOT_ID=ID_OF_BOT_TO_MONITOR
 
 # ID of the admin to notify
 ADMIN_ID=YOUR_ADMIN_USER_ID
+```
+
+### Docker Installation
+
+#### Option 1: Using pre-built Docker Hub image
+
+Run the bot directly using the pre-built image from Docker Hub:
+
+```
+docker run -d --name discord-bot-monitor \
+  -e BOT_TOKEN=YOUR_BOT_TOKEN_HERE \
+  -e CLIENT_ID=YOUR_BOT_CLIENT_ID \
+  -e MONITORED_BOT_ID=ID_OF_BOT_TO_MONITOR \
+  -e ADMIN_ID=YOUR_ADMIN_USER_ID \
+  xaren1337/discord-bot-status:latest
+```
+
+#### Option 2: Building the image yourself
+
+1. Clone this repository:
+```
+git clone https://github.com/XareN1337/discord-bot-status.git
+cd discord-bot-status
+```
+
+2. Build the Docker image:
+```
+docker build -t discord-bot-status .
+```
+
+3. Run the bot with Docker:
+```
+docker run -d --name discord-bot-monitor \
+  -e BOT_TOKEN=YOUR_BOT_TOKEN_HERE \
+  -e CLIENT_ID=YOUR_BOT_CLIENT_ID \
+  -e MONITORED_BOT_ID=ID_OF_BOT_TO_MONITOR \
+  -e ADMIN_ID=YOUR_ADMIN_USER_ID \
+  discord-bot-status
+```
+
+4. To check bot logs:
+```
+docker logs -f discord-bot-monitor
 ```
 
 ## How to get the required data
