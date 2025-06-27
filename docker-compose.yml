@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  discord-bot-monitor:
+    image: xaren1337/discord-bot-status:latest
+    container_name: discord-bot-monitor
+    restart: unless-stopped
+    environment:
+      # Required: Your bot token from Discord Developer Portal
+      - BOT_TOKEN=${BOT_TOKEN}
+      
+      # Required: Your bot's client ID
+      - CLIENT_ID=${CLIENT_ID}
+      
+      # Required: Comma-separated list of bot IDs to monitor
+      # Example: MONITORED_BOTS=123456789012345678,987654321098765432
+      - MONITORED_BOTS=${MONITORED_BOTS}
+      
+      # Optional: Legacy single bot monitoring (used if MONITORED_BOTS is not set)
+      - MONITORED_BOT_ID=${MONITORED_BOT_ID:-}
+      
+      # Required: Your Discord user ID (admin who receives notifications)
+      - ADMIN_ID=${ADMIN_ID}
+    
+    # Optional: Mount logs directory
+    volumes:
+      - ./logs:/app/logs
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('Bot is running')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
